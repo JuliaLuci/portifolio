@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_291279_acme.AddressCepUtils</api_name>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>AddressCepUtils</name>
+        <script><![CDATA[var AddressCepUtils = Class.create();
+AddressCepUtils.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+	getAddress: function(){
+		var cep = this.getParameter('sysparn_cep_value');
+		var res;
+
+		try { 
+			var r = new sn_ws.RESTMessageV2('x_291279_acme.Consultar Cep', 'GetAddress');
+			r.setStringParameterNoEscape('CEP', cep);
+
+			
+			var response = r.execute();
+			var responseBody = response.getBody();
+			res = JSON.parse(responseBody);
+			res = res.logradouro + ", " + res.bairro + '-' + res.cidade + ", " + res.estado;
+			
+		}
+		catch(ex) {
+			res = ex.message;
+		}
+		return res;
+
+
+	}, 
+
+
+	type: 'AddressCepUtils'
+
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-05-14 13:06:01</sys_created_on>
+        <sys_id>14cc5f57db113300022f560868961988</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>AddressCepUtils</sys_name>
+        <sys_package display_value="ACME" source="x_291279_acme">84a39a8fdb113300022f5608689619ea</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ACME">84a39a8fdb113300022f5608689619ea</sys_scope>
+        <sys_update_name>sys_script_include_14cc5f57db113300022f560868961988</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-05-14 13:44:43</sys_updated_on>
+    </sys_script_include>
+</record_update>
